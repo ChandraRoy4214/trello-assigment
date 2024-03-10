@@ -11,10 +11,9 @@ const TaskModal = ({
   setDefaultData,
   ind,
   group,
+  newTask,
 }) => {
-  const { title, desc, deadline, favourite } = task;
-
-  console.log('group', group);
+  const { title, desc, deadline, favourite, id } = task;
 
   const handleChange = (type, value) => {
     setTask((prev) => {
@@ -24,14 +23,39 @@ const TaskModal = ({
 
   const handleSubmit = () => {
     let newData = defaultData?.map((item) => {
-      if (item.group == group) {
+      if (item.group === group && !newTask) {
         item.tasks[ind] = task;
+      } else if (item.group === group && newTask) {
+        item.tasks.push(task);
+        setTask({ id: item.tasks.length + 1 });
       }
 
       return item;
     });
 
     setDefaultData(newData);
+    onCloseModal();
+  };
+
+  const deleteTask = (groupId, taskId) => {
+    console.log(groupId, taskId);
+
+    let newData = defaultData?.map((item) => {
+      if (item.group === groupId) {
+        const newTasks = item.tasks.filter((task) => task.id !== taskId);
+
+        console.log('newTasks: ', newTasks);
+
+        return { ...item, tasks: [...newTasks] };
+      } else {
+        return item;
+      }
+    });
+
+    console.log('newData: ', newData);
+
+    setDefaultData([...newData]);
+
     onCloseModal();
   };
 
@@ -109,15 +133,27 @@ const TaskModal = ({
               placeholder='Take notes here'
             ></textarea>
           </div>
-          <div className='flex justify-between items-center text-white  my-4 mx-auto text-sm sm:text-base w-full'>
-            <button
-              onClick={() => {
-                handleSubmit();
-              }}
-              className={`bg-gray-800 py-1 px-2 sm:py-2 sm:px-3 rounded-lg`}
-            >
-              Submit
-            </button>
+          <div>
+            <div className='flex justify-between items-center text-white  my-4 mx-auto text-sm sm:text-base w-full'>
+              <button
+                onClick={() => {
+                  handleSubmit();
+                }}
+                className={`bg-gray-800 py-1 px-2 sm:py-2 sm:px-3 rounded-lg`}
+              >
+                Submit
+              </button>
+            </div>
+            <div className='flex justify-between items-center text-white  my-4 mx-auto text-sm sm:text-base w-full'>
+              <button
+                onClick={() => {
+                  deleteTask(group, id);
+                }}
+                className={`bg-gray-800 py-1 px-2 sm:py-2 sm:px-3 rounded-lg`}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </Modal>

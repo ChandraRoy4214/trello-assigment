@@ -12,7 +12,6 @@ function Index() {
         return (
           <div key={ind}>
             <TaskBoard
-              ind={ind}
               item={item}
               defaultData={defaultData}
               setDefaultData={setDefaultData}
