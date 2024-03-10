@@ -15,7 +15,7 @@ function TaskBoard({ ind, item, defaultData, setDefaultData }) {
   };
 
   return (
-    <article className='bg-black rounded-md px-2 py-4'>
+    <article className='bg-black rounded-md px-2 py-4 min-h-[80vh]'>
       <input
         placeholder='Title'
         type='text'
@@ -27,7 +27,7 @@ function TaskBoard({ ind, item, defaultData, setDefaultData }) {
         className={`h-10 text-white bg-violet-blue font-semibold focus:font-medium focus:outline-none text-left font-primary text-base rounded-md min-w-44 px-2 bg-black mb-4 focus:border focus:border-gray-700`}
       />
 
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-4'>
         {item?.tasks?.map((task, ind) => {
           return (
             <div key={ind}>

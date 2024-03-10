@@ -1,5 +1,6 @@
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 
 const TaskModal = ({
   open,
@@ -11,7 +12,7 @@ const TaskModal = ({
   ind,
   group,
 }) => {
-  const { title, desc, deadline } = task;
+  const { title, desc, deadline, favourite } = task;
 
   console.log('group', group);
 
@@ -48,7 +49,7 @@ const TaskModal = ({
         }}
       >
         <div className='m-0 min-w-full p-3 rounded-md min-h-full bg-black'>
-          <div className='flex justify-between w-10/12'>
+          <div className='flex justify-between items-center w-11/12'>
             <div className=' mb-4'>
               <p className='text-sm font-semibold mb-1'> Title </p>
               <input
@@ -74,6 +75,25 @@ const TaskModal = ({
                 }}
                 className={` h-10 text-white bg-violet-blue font-semibold focus:font-medium focus:outline-none text-left font-primary text-base rounded-md w-44 px-2 bg-gray-700`}
               />
+            </div>
+
+            <div
+              className='text-2xl cursor-pointer text-red-600 hover:scale-110'
+              onClick={() => {
+                setTask((prev) => {
+                  return { ...prev, favourite: !prev.favourite };
+                });
+              }}
+            >
+              {favourite ? (
+                <p>
+                  <MdOutlineFavorite />
+                </p>
+              ) : (
+                <p>
+                  <MdOutlineFavoriteBorder />
+                </p>
+              )}
             </div>
           </div>
 
